@@ -58,7 +58,7 @@ os.system('echo \'GRUB_GFXPAYLOAD_LINUX="1920x1080"\' >> /etc/default/grub')
 os.system('echo \'GRUB_DISABLE_OS_PROBER="false"\' >> /etc/default/grub')
 os.system("sed '/GRUB_GFXMODE=/d' /etc/default/grub > /etc/default/tmp.txt && rm /etc/default/grub && mv /etc/default/tmp.txt /etc/default/grub && sed '/GRUB_GFXPAYLOAD_LINUX=/d' /etc/default/grub > /etc/default/tmp.txt && rm /etc/default/grub && mv /etc/default/tmp.txt /etc/default/grub && sed '/GRUB_CMDLINE_LINUX=/d' /etc/default/grub > /etc/default/tmp.txt && rm /etc/default/grub && mv /etc/default/tmp.txt /etc/default/grub")
 
-with open('luks.txt') as file:
+with open('/root/luks.txt') as file:
     luks_partition = file.read()
     luks_partition = luks_partition.rstrip()
 luks_short = luks_partition[5:]
@@ -83,6 +83,7 @@ os.system('systemctl enable NetworkManager')
 
 username = input('Enter username: ')
 os.system(f'useradd -mG wheel {username}')
+os.system(f'passwd {username}')
 os.system('echo \'%wheel ALL=(ALL) ALL\' >> /etc/sudoers')
 print('Arch Linux installed! Please reboot')
 os.system('exit')
