@@ -89,7 +89,7 @@ os.system(f'sudo mount /dev/mapper/{luks_short} /mnt')
 os.system(f'sudo mkdir /mnt/boot')
 os.system(f'sudo mount {efi_partition} /mnt/boot')
 
-os.system("sudo pacstrap /mnt base linux-lts linux-firmware vim nano amd-ucode python3 python3-pip")
+os.system(f"sudo pacstrap /mnt base linux-lts linux-firmware vim nano {processor}-ucode python3 python3-pip")
 os.system('sudo genfstab -U /mnt >> /mnt/etc/fstab')
 
 os.system('sudo cp AEI_stage2.py /mnt/root')
