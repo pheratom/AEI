@@ -7,14 +7,14 @@ from colorama import Fore, Back, Style
 colorama.init(autoreset = True)
 
 def warning():
-    print('{Fore.RED}{Style.BRIGHT}WARNING THE SCRIPT IS STILL UNDER DEVELOPMENT. DO NOT USE IT!')
+    print(f'{Fore.RED}{Style.BRIGHT}WARNING THE SCRIPT IS STILL UNDER DEVELOPMENT. DO NOT USE IT!')
     time.sleep(4)
     os.system('clear')
 
 def welcome_stage0():
     #Displays warning that script is still under development
     warning()
-    print("""{Fore.GREEN}
+    print(f"""{Fore.GREEN}
                    ______ _____        __   ___  
              /\   |  ____|_   _|      /_ | / _ \ 
             /  \  | |__    | |   __   _| || | | |
@@ -24,7 +24,6 @@ def welcome_stage0():
     print(f"{Fore.RED}{Style.BRIGHT}Warning! This script supports UEFI devices only!")
     check_uefi()
     #Shows menu where you can choose device partitions
-    PreCheck()
     Install.stage1()
 
 def check_uefi():
@@ -43,11 +42,11 @@ def check_uefi():
             os.system('rm uefi_status.txt')
             sys.exit()
 
-class PreCheck:
+
+class Install:
     def __init__(self):
         pass
-
-    def precheck():
+    def stage1():
         os.system('lsblk')
         global efi_partition
         efi_partition = input("Enter EFI (ESP) partition (example /dev/sda1): ")
@@ -86,11 +85,7 @@ class PreCheck:
         else:
             print('Error! Exitting')
             sys.exit()
-
-class Install:
-    def __init__(self):
-        pass
-    def stage1():
+        global luks_short
         luks_short = luks_cryptdata_partition[5:]
         luks_short = luks_short + '_crypt'
         os.system(f'sudo cryptsetup -y -v luksFormat {luks_cryptdata_partition}')
